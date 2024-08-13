@@ -1,38 +1,37 @@
-.App {
+/* App.css */
+
+/* Style for the star rating */
+.star {
+  color: #f8c146; /* Yellow color for stars */
+}
+
+/* Style for the notification container */
+.notification-container {
+  position: relative;
+}
+
+/* Style for the notification */
+.notification {
+  position: absolute;
+  top: -60px; /* Position the notification above the card */
+  left: 0;
+  background-color: #007bff; /* Blue background */
+  border: 1px solid #0056b3; /* Darker blue border */
+  color: #fff; /* White text color */
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 100%;
   text-align: center;
+  animation: fadeOut 2s forwards; /* Animation to fade out */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* Animation to fade out the notification */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+  100% {
+    opacity: 0;
   }
 }
