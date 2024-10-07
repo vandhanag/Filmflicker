@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'; // Ensure you have this CSS file
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faFilm, faUser, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faFilm, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 const MovieList = () => {
@@ -40,7 +40,7 @@ const MovieList = () => {
   const [filteredMovies, setFilteredMovies] = useState(movies);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [sortedMovies, setSortedMovies] = useState(null);
-  const [reviews, setReviews] = useState(loadReviewsFromLocalStorage());
+  const [reviews] = useState(loadReviewsFromLocalStorage());
 
   const saveReviewsToLocalStorage = (newReviews) => {
     localStorage.setItem('movieReviews', JSON.stringify(newReviews));
