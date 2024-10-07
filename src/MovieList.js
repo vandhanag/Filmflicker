@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'; // Ensure you have this CSS file
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faFilm, faUser, faStar } from '@fortawesome/free-solid-svg-icons'; // Added faStar
-import { Link } from 'react-router-dom'; // Make sure to have react-router-dom installed
+import { faSearch, faFilm, faUser, faStar } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const MovieList = () => {
   // Load reviews from local storage
@@ -59,9 +59,9 @@ const MovieList = () => {
 
   const calculateAverageRating = (movieId) => {
     const movieReviews = reviews[movieId] || [];
-    if (movieReviews.length === 0) return 0; 
+    if (movieReviews.length === 0) return 0;
     const totalRating = movieReviews.reduce((acc, review) => acc + review.rating, 0);
-    return totalRating / movieReviews.length; 
+    return totalRating / movieReviews.length;
   };
 
   const handleSortByRating = () => {
@@ -159,76 +159,79 @@ const MovieDetails = ({ movie, goBack, calculateAverageRating, reviews, saveRevi
     const movieReviews = reviews[movie.id] || [];
     const updatedReviews = { ...reviews, [movie.id]: [...movieReviews, newReview] };
     saveReviewsToLocalStorage(updatedReviews);
-    alert('Review submitted successfully!');
+
     setUsername('');
     setRating(0);
     setReviewText('');
   };
 
   return (
-    <div className="movie-details">
-      <h2>{movie.title}</h2>
-      <button className="btn btn-secondary" onClick={goBack}>Back</button>
-      <img src={movie.image} alt={movie.title} className="img-fluid" />
-      <p>Year: {movie.year}</p>
+    <div>
+      <button className="btn btn-secondary mb-3" onClick={goBack}>
+        Go Back
+      </button>
+      <h2>{movie.title} ({movie.year})</h2>
+      <img src={movie.image} alt={movie.title} className="img-fluid mb-3" />
       <p>Genre: {movie.genre}</p>
       <p>Language: {movie.language}</p>
       <p>Average Rating: {calculateAverageRating(movie.id).toFixed(1)}</p>
 
-      <h3>Reviews:</h3>
-      {reviews[movie.id] && reviews[movie.id].length > 0 ? (
-        <ul>
-          {reviews[movie.id].map((review, index) => (
-            <li key={index}>
-              <strong>{review.username}</strong> rated it <FontAwesomeIcon icon={faStar} style={{ color: 'gold' }} /> {review.rating}: {review.review}
-              <p>Movie: {review.movieTitle} (Year: {review.movieYear})</p> {/* Display movie name and year */}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No reviews yet.</p>
-      )}
-
-      <h3>Submit Your Review:</h3>
+      <h3>Add Your Review</h3>
       <form onSubmit={handleReviewSubmit}>
-        <div className="mb-3">
+        <div className="form-group">
+          <label htmlFor="username">Username:</label>
           <input
             type="text"
             className="form-control"
-            placeholder="Enter your username"
+            id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="rating" className="form-label">Rating (1-5):</label>
+        <div className="form-group">
+          <label htmlFor="rating">Rating:</label>
           <input
             type="number"
-            id="rating"
             className="form-control"
+            id="rating"
             min="1"
             max="5"
             value={rating}
-            onChange={(e) => setRating(Number(e.target.value))}
+            onChange={(e) => setRating(parseInt(e.target.value))}
             required
           />
         </div>
-        <div className="mb-3">
+        <div className="form-group">
+          <label htmlFor="review">Review:</label>
           <textarea
             className="form-control"
-            placeholder="Write your review..."
-            rows="3"
+            id="review"
+            rows="4"
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">Submit Review</button>
+        <button type="submit" className="btn btn-primary mt-3">Submit Review</button>
       </form>
+
+      <h3>Reviews:</h3>
+      {reviews[movie.id] && reviews[movie.id].length > 0 ? (
+        reviews[movie.id].map((review, index) => (
+          <div key={index} className="card mt-3">
+            <div className="card-body">
+              <h5 className="card-title">{review.username} - {review.movieTitle} ({review.movieYear})</h5>
+              <p className="card-text">Rating: {review.rating}/5</p>
+              <p className="card-text">Review: {review.review}</p>
+            </div>
+          </div>
+        ))
+      ) : (
+        <p>No reviews yet. Be the first to review this movie!</p>
+      )}
     </div>
   );
 };
-
 
 export default MovieList;
