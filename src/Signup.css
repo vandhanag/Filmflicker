@@ -1,0 +1,61 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('bg.jpeg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.signup-card {
+    width: 90vw; /* Increased width for better visibility */
+    max-width: 500px; /* Adjusted max-width for a larger box */
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly less transparent for better brightness */
+    padding: 30px; /* Increased padding for a more spacious interior */
+    border-radius: 12px; /* Larger border-radius for a softer look */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Enhanced shadow for better focus */
+    margin: 0 auto; /* Center align the card horizontally */
+}
+
+.btn-primary {
+    background-color: #B0DAFF; /* Light blue */
+    border-color: #B0DAFF;
+    color: #000; /* Brighter text color for contrast */
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #007bff; /* Retain the hover color for contrast */
+    border-color: #0056b3;
+}
+
+.card-title {
+    font-size: 1.6rem; /* Larger font size for better visibility */
+    font-weight: bold;
+    margin-bottom: 1.5rem; /* Increased margin for better spacing */
+    color: #0f0f0a; /* Light yellow */
+    text-align: center; /* Center align the title */
+}
+
+.form-group label {
+    color: #88c3da; /* Very light blue */
+    font-weight: bold; /* Make labels stand out */
+}
+
+input.form-control {
+    border-color: #618795; /* Very light blue */
+    background-color: #FEFF86; /* Light yellow for input background */
+    color: #000; /* Brighter text color for readability */
+    padding: 12px; /* Increased padding for better user experience */
+}
+
+input.form-control:focus {
+    border-color: #B0DAFF; /* Light blue */
+    box-shadow: 0 0 0 0.2rem rgba(176, 218, 255, 0.25); /* Light blue shadow */
+}

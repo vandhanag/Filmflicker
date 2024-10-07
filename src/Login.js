@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './LoginSignup.css';
+import './Login.css';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 import { LoginSocialGoogle } from 'reactjs-social-login';
 
-function Login() {
-  const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+function Login({ onLogin }) {
+  const navigate = useNavigate();  // Used for navigation between pages
+  const [username, setUsername] = useState('');  // State for username
+  const [password, setPassword] = useState('');  // State for password
 
+  // Function to handle login
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -17,9 +18,9 @@ function Login() {
       const response = await fetch('http://localhost/backend/login.php', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
       });
 
       if (!response.ok) {
@@ -28,29 +29,10 @@ function Login() {
 
       const data = await response.json();
       alert(data.message);
+
       if (data.message === "Login successful") {
-        navigate('/movies');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error: ' + error.message);
-    }
-  };
-
-  const handleGoogleLogin = async (data) => {
-    try {
-      const response = await fetch('http://localhost/backend/google_auth.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ token: data.tokenId })
-      });
-
-      const result = await response.json();
-      alert(result.message);
-      if (result.message === "Login successful") {
-        navigate('/movies');
+        onLogin({ username: data.username });  // Call the onLogin prop with username
+        navigate('/movies');  // Redirect to MovieList page after successful login
       }
     } catch (error) {
       console.error('Error:', error);
@@ -59,40 +41,55 @@ function Login() {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-16">
-          <div className="card">
-            <div className="card-body">
-              <h3 className="card-title text-center">Login</h3>
-              <form onSubmit={handleLogin}>
-                <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <input type="text" className="form-control" id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter username" required />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" required />
-                </div>
-                <button type="submit" className="btn btn-primary btn-block">Login</button>
-              </form>
-              <div className="mt-3">
-                <LoginSocialGoogle
-                  client_id={"80251864896-9bm2n7fhiu4ep9gssvu9dnarqehr9i68.apps.googleusercontent.com"}
-                  scope="openid profile email"
-                  discoveryDocs="claims_supported"
-                  access_type="offline"
-                  onResolve={({ provider, data }) => {
-                    handleGoogleLogin(data);
-                  }}
-                  onReject={(err) => {
-                    console.log(err);
-                  }}
-                >
-                  <GoogleLoginButton />
-                </LoginSocialGoogle>
-              </div>
+    <div className="login-container">
+      <div className="card login-card">
+        <div className="card-body">
+          <h3 className="card-title text-center">Login</h3>
+          <form onSubmit={handleLogin}>
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                className="form-control"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter username"
+                required
+              />
             </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter password"
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-primary btn-block">
+              Login
+            </button>
+          </form>
+          <div className="mt-3 text-center">
+            <LoginSocialGoogle
+              client_id={"843338869291-q188tfcfasg9f8dfohu06ms9qaggqbmj.apps.googleusercontent.com"}
+              scope="openid profile email"
+              discoveryDocs="claims_supported"
+              access_type="offline"
+              onResolve={({ provider, data }) => {
+                console.log("Google Login Data: ", data);
+                // Handle Google login here
+              }}
+              onReject={(err) => {
+                console.log(err);
+              }}
+            >
+              <GoogleLoginButton />
+            </LoginSocialGoogle>
           </div>
         </div>
       </div>

@@ -1,14 +1,21 @@
-// google_auth.php
 <?php
 require 'vendor/autoload.php';
 include 'db.php';
 
+// Always include CORS headers
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Content-Type: application/json; charset=UTF-8");
 
-$client = new Google_Client(['client_id' => 'YOUR_GOOGLE_CLIENT_ID']); // Specify your Google Client ID
+// Handle OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header("Access-Control-Max-Age: 86400"); // Cache for 1 day
+    exit(0);
+}
+
+// Your Google authentication logic here
+$client = new Google_Client(['client_id' => '843338869291-q188tfcfasg9f8dfohu06ms9qaggqbmj.apps.googleusercontent.com']); // Specify your Google Client ID
 
 $input = file_get_contents("php://input");
 $data = json_decode($input, true);
