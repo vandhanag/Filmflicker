@@ -46,11 +46,11 @@ function LandingPage() {
           <p className="landing-subtitle">Personalized movie recommendations just for you.</p>
 
           <div className="catchy-images">
-            <img src={image1} alt="Catchy Image 1" className="catchy-image" />
-            <img src={image2} alt="Catchy Image 2" className="catchy-image" />
-            <img src={image3} alt="Catchy Image 3" className="catchy-image" />
-            <img src={image4} alt="Catchy Image 4" className="catchy-image" />
-            <img src={image5} alt="Catchy Image 5" className="catchy-image" />
+            <img src={image1} alt="A movie scene" className="catchy-image" />
+            <img src={image2} alt="Exciting action shot" className="catchy-image" />
+            <img src={image3} alt="Romantic movie moment" className="catchy-image" />
+            <img src={image4} alt="Sci-fi thriller shot" className="catchy-image" />
+            <img src={image5} alt="Dramatic movie scene" className="catchy-image" />
           </div>
 
           {showAbout && (
